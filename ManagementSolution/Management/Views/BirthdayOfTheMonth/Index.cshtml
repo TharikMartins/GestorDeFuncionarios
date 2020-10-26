@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Management.Models.BirthdayOfTheMonthViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Aniversariantes do mês @DateTime.Now.Month</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:30%;">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th style="width:30%;">
+                @Html.DisplayNameFor(model => model.Birthdate)
+            </th>
+            <th style="width:30%;">
+                @Html.DisplayNameFor(model => model.TypeOfPerson)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfPerson)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

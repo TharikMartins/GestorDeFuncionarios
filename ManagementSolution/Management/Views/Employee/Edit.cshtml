@@ -1,0 +1,130 @@
+﻿@model Management.Models.EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>EmployeeViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form action="Employee/Edit/@Model.Id" id="send" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CPF" class="control-label"></label>
+                <input asp-for="CPF" class="form-control" />
+                <span asp-validation-for="CPF" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthdate" class="control-label"></label>
+                <input asp-for="Birthdate" class="form-control" />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <br />
+                @{ 
+                    Model.Gender = Model.Gender == "Masculino" ? "M" : "F";
+                }
+
+                @Html.RadioButtonFor(model => model.Gender, "M", new { @checked = true })
+                @Html.Label("Masculino")
+                @Html.RadioButtonFor(model => model.Gender, "F", new { @checked = true })
+                @Html.Label("Feminino")
+            </div>
+            <div class="form-group">
+                <input type="button" value="Trocar Endereço" class="btn btn-primary btn-sm enable-cep" />
+            </div>
+            <div class="form-group CEP" style="display:none;">
+                <label class="control-label">CEP</label>
+                <input id="CEP" maxlength="9" class="form-control" />
+            </div>
+            <div class="form-group">
+                @{
+                    var completeAddress = Model.Address.Split("-");
+                    var address = completeAddress[0];
+                    var AddressNumber = Convert.ToInt32(completeAddress[1].Trim());
+                }
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="@address" id="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressNumber" class="control-label"></label>
+                <input type="number" min="1" asp-for="@AddressNumber" class="form-control" />
+                <span asp-validation-for="AddressNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsActive" class="control-label"></label>
+                <br />
+                @Html.RadioButtonFor(model => model.IsActive, true, false)
+                @Html.Label("Sim")
+                @Html.RadioButtonFor(model => model.IsActive, false, false)
+                @Html.Label("Não")
+            </div>
+            <div class="form-group">
+                <input type="button" value="Adicionar dependente" id="add_dependent" class="btn btn-success btn-sm" />
+            </div>
+            <div class="list-group" id="dependent_list">
+                @{
+                    for (int i = 0; i < Model.Dependent.Count; i++)
+                    {
+                        <div class="dependent" id=@string.Format("dependent_{0}",i+1)>
+                            <div class="form-group">
+                                <label class="control-label">@string.Format("Nome do dependente {0}", i + 1)</label>
+                                <input class="form-control" id=@string.Format("dependent_name{0}", i+1) type="text" value="@Model.Dependent[i].Name" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">@string.Format("Data de nascimento do dependente {0}", i + 1)</label>
+                                <input class="form-control Birth_Dependent" id=@string.Format("dependent_birthdate{0}", i+1) type="text" maxlength="10" value="@Model.Dependent[i].Birthdate" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label" style="margin-left:6px;">@string.Format("Genêro do dependente {0}", i + 1)</label> <br>
+                                <input id=@string.Format("dependent_gender{0}", i+1) name=@string.Format("dependent_gender{0}", i+1) type="radio" value="M" style="margin-left:6px;" checked="checked" />
+                                <label style="margin-left:6px;">Masculino</label>
+                                <input style="margin-left:6px;" id=@string.Format("dependent_gender{0}", i+1) name=@string.Format("dependent_gender{0}", i+1) type="radio" value="F" checked="checked" />
+                                <label style="margin-left:6px;">Feminino</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="button" class="btn btn-danger btn-sm remove_dependent" id=@string.Format("{0}", i+1) value="Remover dependente" />
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar para a lista de funcionários</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/utils/JQuery-Mask.js"></script>
+    <script src="~/pages/EditEmployee/EditEmployee.js"></script>
+    <script src="~/utils/CEP.js"></script>
+}
