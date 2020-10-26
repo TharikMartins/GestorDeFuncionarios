@@ -28,11 +28,11 @@ namespace Management.Infraestructure.Repositories
 
             return employees;
         }
-        public int SaveEmployee(EmployeeDTO Employee)
+        public void SaveEmployee(EmployeeDTO Employee)
         {
             this._enterpriseContext.Add(Employee);
 
-            return this._enterpriseContext.SaveChanges();
+            this._enterpriseContext.SaveChanges();
         }
 
         public void SaveDependent(DependentDTO Dependent)

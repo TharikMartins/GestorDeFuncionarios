@@ -6,7 +6,7 @@ namespace Management.Infraestructure.Repositories.Interface
     public interface IEmployeeRepository
     {
         List<EmployeeDTO> List();
-        int SaveEmployee(EmployeeDTO Employee);
+        void SaveEmployee(EmployeeDTO Employee);
         void SaveDependent(DependentDTO Dependent);
         void DeleteEmployee(int EmployeeId);
         EmployeeDTO FindEmployeeById(int EmployeeId);

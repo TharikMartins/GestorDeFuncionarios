@@ -7,7 +7,7 @@ namespace Management.Services.Employee
 {
     public class EmployeeService : IEmployeeService
     {
-        private IEmployeeRepository _employeeRepository { get; set; }
+        private IEmployeeRepository _employeeRepository;
 
         public EmployeeService(IEmployeeRepository employeeRepository)
         {
@@ -21,22 +21,7 @@ namespace Management.Services.Employee
 
         public void Save(EmployeeDTO employee)
         {
-            var employmeeId = this._employeeRepository.SaveEmployee(employee);
-
-            //SaveDependents(employee.Dependents, employmeeId);
-        }
-
-        private void SaveDependents(ICollection<DependentDTO> Dependents, int employeeId)
-        {
-            if (Dependents != null && Dependents.Count > 0)
-            {
-                foreach (var dependent in Dependents)
-                {
-                    dependent.EmployeeId = employeeId;
-                    this._employeeRepository.SaveDependent(dependent);
-                }
-            }
-
+           this._employeeRepository.SaveEmployee(employee);
         }
 
         public void Delete(int employeeId)
