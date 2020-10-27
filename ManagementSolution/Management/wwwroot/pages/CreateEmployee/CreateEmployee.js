@@ -64,8 +64,10 @@
 
         $.ajax({
             type: 'post',
-            url: '/Employee/Create',
-            data: data,
+            url: '/Employee/Post',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "json",
             success: function (response) {
                 if (response.success === true) {
                     window.location.href = "/Employee";

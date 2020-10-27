@@ -12,7 +12,6 @@ namespace Management.Infraestructure.DTO
         public DateTime Birthdate { get; set; }
         public char Gender { get; set; }
         public int EmployeeId { get; set; }
-
         public EmployeeDTO Employee { get; set; }
     }
 }

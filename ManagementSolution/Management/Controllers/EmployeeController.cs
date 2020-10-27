@@ -34,7 +34,7 @@ namespace Management.Controllers
         }
 
         [HttpPost]
-        public JsonResult Create([FromForm] EmployeeViewModel Request)
+        public JsonResult Post([FromForm] EmployeeViewModel Request)
         {
             try
             {
