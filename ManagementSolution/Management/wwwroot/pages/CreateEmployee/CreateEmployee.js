@@ -141,7 +141,7 @@
 
     });
 
-    //Validando fields
+    //Validando os campos
     function validate_fields(data) {
         if (data.Address === "" || data.AddressNumber === "" || data.Birthdate === "" || data.CPF === "" || data.Name === "" || data.Phone === "")
             return false;
