@@ -7,9 +7,9 @@ namespace Management.Services.Employee.Interfaces
     {
         List<EmployeeDTO> List();
         void Save(EmployeeDTO Employee);
-        void Delete(int employeeId);
-        EmployeeDTO FindEmployeeById(int employeeId);
-        void UpdateEmployee(EmployeeDTO EmployeeDTO);
+        void Delete(int Id);
+        EmployeeDTO FindById(int Id);
+        void Update(EmployeeDTO Employee);
         (List<EmployeeDTO> Employees, List<DependentDTO> Dependents) GetBirthdayOfTheMonth();
     }
 }

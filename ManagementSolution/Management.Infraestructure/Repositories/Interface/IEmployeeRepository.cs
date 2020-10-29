@@ -3,13 +3,9 @@ using System.Collections.Generic;
 
 namespace Management.Infraestructure.Repositories.Interface
 {
-    public interface IEmployeeRepository
+    public interface IEmployeeRepository : IRepository<EmployeeDTO>
     {
-        List<EmployeeDTO> List();
-        void SaveEmployee(EmployeeDTO Employee);
-        void DeleteEmployee(int EmployeeId);
-        EmployeeDTO FindEmployeeById(int EmployeeId);
-        void UpdateEmployee(EmployeeDTO EmployeeDTO);
+        void Delete(int Id);
         (List<EmployeeDTO> employeesDTO, List<DependentDTO> dependentsDTO) BirthdaysOfTheMonth();
     }
 }

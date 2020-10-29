@@ -28,11 +28,13 @@ namespace Management
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            IOC.Load(services);
             services.AddDbContext<EnterpriseContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Enterprise"), a => a.MigrationsAssembly("Management.Api"));
             });
+
+            IOC.Load(services);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

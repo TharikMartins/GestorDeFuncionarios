@@ -52,7 +52,7 @@ namespace Management.Controllers
         {
             try
             {
-                var employeeDTO = this._employeeService.FindEmployeeById(id);
+                var employeeDTO = this._employeeService.FindById(id);
 
                 return View(ParseDTO.ParseEmployee(employeeDTO));
             }
@@ -69,7 +69,7 @@ namespace Management.Controllers
         {
             try
             {
-                this._employeeService.UpdateEmployee(ParseDTO.ParseEmployee(Request));
+                this._employeeService.Update(ParseDTO.ParseEmployee(Request));
                 return Json(new { Success = true });
             }
             catch (Exception ex)

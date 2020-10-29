@@ -7,53 +7,50 @@ using System.Linq;
 
 namespace Management.Infraestructure.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository : Repository<EmployeeDTO>, IEmployeeRepository
     {
-        private EnterpriseContext _enterpriseContext { get; set; }
 
-        public EmployeeRepository(EnterpriseContext enterpriseContext)
+        public EmployeeRepository(EnterpriseContext enterpriseContext) : base(enterpriseContext)
+        { }
+
+        public override List<EmployeeDTO> List()
         {
-            this._enterpriseContext = enterpriseContext;
+            return this._dbContext.Set<EmployeeDTO>().Include(d => d.Dependents).ToList();
         }
 
-        public List<EmployeeDTO> List()
+        public override void Save(EmployeeDTO Entity)
         {
-            var employees = _enterpriseContext.EmployeesDTO.Include(d => d.Dependents).ToList();
+            base.Save(Entity);
 
-            return employees;
-        }
-        public void SaveEmployee(EmployeeDTO Employee)
-        {
-            this._enterpriseContext.Add(Employee);
-
-            this._enterpriseContext.SaveChanges();
+            this._dbContext.SaveChanges();
         }
 
-        public void DeleteEmployee(int employeeId)
+        public void Delete(int id)
         {
-            var employee = this._enterpriseContext.EmployeesDTO.Where(e => e.Id == employeeId).Include(d => d.Dependents).FirstOrDefault();
+            var entity = this.FindById(id);
 
-            if (employee != null)
-                this._enterpriseContext.EmployeesDTO.Remove(employee);
+            base.Delete(entity);
 
-            this._enterpriseContext.SaveChanges();
-        }
-        public EmployeeDTO FindEmployeeById(int employeeId)
-        {
-           return this._enterpriseContext.EmployeesDTO.Where(e => e.Id == employeeId).Include(d => d.Dependents).FirstOrDefault();
+            this._dbContext.SaveChanges();
         }
 
-        public void UpdateEmployee(EmployeeDTO EmployeeDTO)
+        public override EmployeeDTO FindById(int Id)
         {
-            this._enterpriseContext.Update(EmployeeDTO);
+            return this._dbContext.Set<EmployeeDTO>().Include(d => d.Dependents).Where(e => e.Id == Id).FirstOrDefault();
+        }
 
-            this._enterpriseContext.SaveChanges();
+        public override void Update(EmployeeDTO Entity)
+        {
+            base.Update(Entity);
+
+            this._dbContext.SaveChanges();
         }
 
         public (List<EmployeeDTO> employeesDTO, List<DependentDTO> dependentsDTO) BirthdaysOfTheMonth()
         {
-            var employeesDTO = this._enterpriseContext.EmployeesDTO.Where(e => e.Birthdate.Month == DateTime.Now.Month).ToList();
-            var dependentsDTO = this._enterpriseContext.DependentsDTO.Where(d => d.Birthdate.Month == DateTime.Now.Month).ToList();
+            var employeesDTO = this._dbContext.Set<EmployeeDTO>().Where(e => e.Birthdate.Month == DateTime.Now.Month).ToList();
+            var dependentsDTO = this._dbContext.Set<DependentDTO>().Where(d => d.Birthdate.Month == DateTime.Now.Month).ToList();
+
             return (employeesDTO, dependentsDTO);
 
         }

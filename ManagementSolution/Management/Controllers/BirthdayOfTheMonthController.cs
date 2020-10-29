@@ -15,6 +15,7 @@ namespace Management.Controllers
             this._employeeService = employeeService;
             this._logger = logger;
         }
+
         public IActionResult Index()
         {
             try
@@ -22,7 +23,7 @@ namespace Management.Controllers
                 var birthdayList = this._employeeService.GetBirthdayOfTheMonth();
                 return View(ParseDTO.ParseBirthdayList(birthdayList));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this._logger.LogError(ex.Message);
                 return RedirectToAction("Index", "Home");

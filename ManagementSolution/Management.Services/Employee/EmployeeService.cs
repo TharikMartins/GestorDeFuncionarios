@@ -21,22 +21,22 @@ namespace Management.Services.Employee
 
         public void Save(EmployeeDTO employee)
         {
-           this._employeeRepository.SaveEmployee(employee);
+           this._employeeRepository.Save(employee);
         }
 
-        public void Delete(int employeeId)
+        public void Delete(int Id)
         {
-            this._employeeRepository.DeleteEmployee(employeeId);
+            this._employeeRepository.Delete(Id);
         }
 
-        public EmployeeDTO FindEmployeeById(int employeeId)
+        public EmployeeDTO FindById(int Id)
         {
-            return this._employeeRepository.FindEmployeeById(employeeId);
+            return this._employeeRepository.FindById(Id);
         }
 
-        public void UpdateEmployee(EmployeeDTO EmployeeDTO)
+        public void Update(EmployeeDTO Employe)
         {
-            this._employeeRepository.UpdateEmployee(EmployeeDTO);
+            this._employeeRepository.Update(Employe);
         }
 
         public (List<EmployeeDTO> Employees, List<DependentDTO> Dependents) GetBirthdayOfTheMonth()

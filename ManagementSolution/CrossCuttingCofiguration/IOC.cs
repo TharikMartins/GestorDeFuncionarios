@@ -1,4 +1,5 @@
-﻿using Management.Infraestructure.Repositories;
+﻿using Management.Infraestructure.DTO;
+using Management.Infraestructure.Repositories;
 using Management.Infraestructure.Repositories.Interface;
 using Management.Services.Employee;
 using Management.Services.Employee.Interfaces;
@@ -10,8 +11,10 @@ namespace CrossCuttingCofiguration
     {
         public static void Load(IServiceCollection serviceCollection)
         {
+            serviceCollection.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             serviceCollection.AddScoped<IEmployeeService, EmployeeService>();
             serviceCollection.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            
         }
 
     }
